@@ -25,6 +25,7 @@ class Raindrops:
     def run_game(self):
         while True:
             self._check_events()
+            self._update_raindrops()
             self._update_screen()
             self.clock.tick(60)     # Have the game run at 60 fps.
 
@@ -34,6 +35,10 @@ class Raindrops:
             # If the player closes the window, then exit.
             if event.type == pygame.QUIT:
                 sys.exit()
+
+    def _update_raindrops(self):
+        """Update the positions of all the raindrops."""
+        self._pour_rain()
 
     def _create_raindrops(self):
         """Create the rows of raindrops"""
@@ -66,6 +71,10 @@ class Raindrops:
         new_raindrop.rect.x = x_position
         new_raindrop.rect.y = y_position
         self.raindrops.add(new_raindrop)
+
+    def _pour_rain(self):
+        for rain in self.raindrops.sprites():
+            rain.rect.y += self.settings.rain_speed
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
